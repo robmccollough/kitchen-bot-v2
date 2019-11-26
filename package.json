@@ -1,0 +1,25 @@
+{
+  "name": "kitchen-bot-express",
+  "version": "1.0.0",
+  "description": "KitchenBot transitioned to follow react-app-structure with client and express server",
+  "main": "app.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "serverdev": "nodemon app.js --dev",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "localtunnel": "^2.0.0",
+    "mongoose": "^5.7.3",
+    "nodemon": "^1.19.3"
+  }
+}
