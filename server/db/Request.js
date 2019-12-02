@@ -6,7 +6,7 @@ const Request = mongoose.model('Request', new mongoose.Schema({
     default: Date.now()
   },
   created_by: {
-      type: Number,
+      type: String,
       required: true
   },
   body: {

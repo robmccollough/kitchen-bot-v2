@@ -3,7 +3,7 @@ const router = express.Router()
 const Request = require('../db/Request.js');
 
 router.post( '/', (req, res) => {
-    (new Request(req.body)).then( result => {
+    (new Request(req.body)).save().then( result => {
         res.send(result)
     }).catch(err => res.send(err))
 })

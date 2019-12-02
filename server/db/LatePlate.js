@@ -10,7 +10,7 @@ const LatePlate = mongoose.model('LatePlate', new mongoose.Schema({
       required: [true, 'Late plate recipient required']
   },
   created_by: {
-    type: Number,
+    type: String,
     required: false
   },
   complete : {

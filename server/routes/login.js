@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../db/User.js')
 
-router.post('/',(req, res) => {
+router.post('/', (req, res) => {
     //check if username and pass are there and strings
     if(req.body.email && req.body.password ){
         User.findOne({ email : req.body.email, password : req.body.password }).then( result => {
@@ -11,8 +11,8 @@ router.post('/',(req, res) => {
                 //maybe dont send the password back?
                 res.send({
                     isAuthenticated: true,
-                    user: result,
-                    storeCookie: true
+                    user: result
+                    // ,storeCookie: true
                     // ,jwt: 'something'
                 })
             }else{

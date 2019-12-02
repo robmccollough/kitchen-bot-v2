@@ -5,8 +5,12 @@ const Metric = require('../db/Metric.js');
 router.put( '/', (req, res) => {
 
     switch(req.body.stat){
-        case('asks'):  Metric.update({metric: req.body.metric}, { $inc : { "asks" : 1 }}).then( result => res.send(result)); break;
-        case('total'): Metric.update({metric: req.body.metric}, { $inc : { "total" : 1 }}).then( result => res.send(result)); break;
+        case('asks'):  Metric.update({metric: req.body.metric}, { $inc : { "asks" : 1 }}).then( result => res.send(result)).catch( error => {
+            res.send(error)
+        }); break;
+        case('total'): Metric.update({metric: req.body.metric}, { $inc : { "total" : 1 }}).then( result => res.send(result)).catch( error => {
+            res.send(error)
+        }); break;
         default: res.send('Metric Update Failed: Invalid stat parameter')
     }
    

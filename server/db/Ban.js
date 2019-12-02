@@ -6,7 +6,7 @@ const Ban = mongoose.model('Ban', new mongoose.Schema({
     default: Date.now()
   },
   created_by: {
-      type: Number,
+      type: String,
       required: true
   },
   user_id: {

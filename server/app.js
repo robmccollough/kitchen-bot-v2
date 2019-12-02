@@ -27,6 +27,10 @@ files.forEach(file => {
   console.log(`registered '${file}' to route '${router.prefix || '/'}'`);
 });
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
+})
+
 app.listen(port, () => {
     if (process.argv[2] === '--dev') {
         require('./dev').dev(port, process.env.LT_SUBDOMAIN);

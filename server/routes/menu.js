@@ -26,10 +26,12 @@ router.get('/',(req, res) => {
             success: true,
             data: doc
         })
+    }).catch( error => {
+        res.send(error)
     })
 })
 
-//private resource
+//private endpoints resources
 //sends last 10 || length
 router.get('/all', (req, res) => {
 
@@ -38,5 +40,8 @@ router.get('/all', (req, res) => {
     }).catch( err => res.send(err))
 })
 
+router.delete('/', (req, res) => {
+    Menu.deleteOne({ _id : req.body.menu_id}).then( result => res.send(result)).catch( err => res.send(err))
+})
 
 module.exports = {router: router, prefix: '/menu'}

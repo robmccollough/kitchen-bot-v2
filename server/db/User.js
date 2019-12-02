@@ -5,10 +5,6 @@ const User = mongoose.model('User', new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
-  user_id: {
-      type: String,
-      unique: true
-  },
   role: {
       type: String,
       enum: ['admin', 'user'],

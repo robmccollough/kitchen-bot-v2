@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
 
     (new Ban(req.body)).save().then(result => {
         res.send(result)
-    }).error( error => {
+    }).catch( error => {
         res.send(error)
     })
 })  
@@ -25,10 +25,14 @@ router.get('/', (req, res) => {
     if(active){
         Ban.find({ active: true }).sort({created_at : -1}).limit(length || 10).then( result => {
             res.send(result)
+        }).catch( error => {
+            res.send(error)
         })
     }else{
         Ban.find().sort({created_at : -1}).limit(length).then( result => {
             res.send(result)
+        }).catch( error => {
+            res.send(error)
         })
     }
 })
