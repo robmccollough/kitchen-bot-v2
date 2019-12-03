@@ -2,7 +2,7 @@
 	"name": "kitchen-bot-express",
 	"version": "1.0.0",
 	"description": "KitchenBot transitioned to follow react-app-structure with client and express server",
-	"main": "./app.js",
+	"main": "app.js",
 	"scripts": {
 		"client-install": "npm install --prefix client",
 		"start": "nodemon ./server/app.js",
