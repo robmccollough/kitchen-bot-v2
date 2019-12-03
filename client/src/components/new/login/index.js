@@ -18,7 +18,7 @@ const Login = (props) => {
             url: `http://localhost:${process.env.REACT_APP_SERVER_PORT}/login`,
             data:{
                 email: values.email,
-                password: sha256(values.password)
+                password: values.password
             }
         }).then( r => console.log(r))
     }

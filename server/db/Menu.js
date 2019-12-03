@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Menu = mongoose.model('Menu', new mongoose.Schema({
   date: {
     type: Date,
-    required: [true, 'date created is required']
+    default: Date.now()
   },
   food: {
     monday: {

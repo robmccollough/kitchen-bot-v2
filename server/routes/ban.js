@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Ban = require('../db/Ban.js')
+const authAdmin = require('../middlewares/authAdmin.js')
 
 //posting of ban parameters:
 //req.body : {
@@ -10,7 +11,7 @@ const Ban = require('../db/Ban.js')
 // 	   active : Boolean 
 //     
 // }
-router.post('/', (req, res) => {
+router.post('/', authAdmin, (req, res) => {
 
     (new Ban(req.body)).save().then(result => {
         res.send(result)
@@ -19,7 +20,7 @@ router.post('/', (req, res) => {
     })
 })  
 
-router.get('/', (req, res) => {
+router.get('/', authAdmin, (req, res) => {
     const {active, length} = req.body
     //length defaults to 10 if null
     if(active){

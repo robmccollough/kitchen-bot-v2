@@ -8,10 +8,11 @@ const fs = require('fs');
 const cookieparser = require('cookie-parser');
 const cors = require('cors');
 const bearerToken = require('express-bearer-token');
-
+const bp = require('body-parser');
 
 //shameless season 2 
-app.use(require('body-parser').json())
+app.use(bp.json())
+app.use(bp.urlencoded({extended: false}))
 app.use(cookieparser())
 app.use(cors())
 app.use(bearerToken())
