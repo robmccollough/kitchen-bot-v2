@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../db/User.js");
 const auth = require("../middlewares/auth.js");
+const authAdmin = require("../middlewares/authAdmin.js");
 const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
@@ -29,18 +30,18 @@ router.post("/", (req, res) => {
 					email: email,
 					password: hash
 				});
-				console.log(user);
-				user
-					.save()
-					.then(result => {
-						res.send({
-							success: true,
-							created_user: {
-								...result
-							}
-						});
-					})
-					.catch(err => res.send({ err: "Error saving account", msg: err }));
+				user.save((err, result) => {
+					if (err) {
+						return res.send({ err: "Error saving account", msg: err });
+					}
+
+					res.send({
+						success: true,
+						created_user: {
+							...result._doc
+						}
+					});
+				});
 			});
 		}
 	});
@@ -62,6 +63,18 @@ router.get("/", auth, (req, res) => {
 	User.findOne({ _id: req.locals.user_id }).then(result => {
 		res.send(result);
 	});
+});
+
+router.post("/guild", authAdmin, (req, res) => {
+	if (!req.body.user_id) {
+		return res.send({ err: "Expected user_id param" });
+	}
+
+	User.updateOne({ _id: req.body.user_id }, { role: "admin" })
+		.then(result => {
+			res.send(result);
+		})
+		.catch(err => res.send(err));
 });
 
 router.put("/", auth, (req, res) => {
