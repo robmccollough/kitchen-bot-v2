@@ -25,10 +25,12 @@ router.post("/", (req, res) => {
 					return res.send({ err: "Error creating account", msg: err });
 				}
 
-				new User({
+				let user = new User({
 					email: email,
 					password: hash
-				})
+				});
+				console.log(user);
+				user
 					.save()
 					.then(result => {
 						res.send({
