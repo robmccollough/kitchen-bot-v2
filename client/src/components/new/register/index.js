@@ -17,7 +17,7 @@ const Register = (props) => {
     const checkEmail = async (email) => {
         return await axios({
             method: 'post',
-            url: 'http://localhost:3000/user/check',
+            url: '/user/check',
             body:{
                 email: email
             }
