@@ -12,6 +12,8 @@ const SomeOtherComponent = (props) => {
     return <div>
         <TemplateComponent [declare props here eg:] message="Hello!"/>
     </div>
+
+    JACKS BRANCH
 }
 
 */
