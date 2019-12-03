@@ -1,54 +1,44 @@
 require('dotenv').config()
-const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const path = require('path');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
+const mongoose = require('mongoose');
+const fs = require('fs');
+const cookieparser = require('cookie-parser');
+const cors = require('cors');
+const bearerToken = require('express-bearer-token');
+const bp = require('body-parser');
 
-app.use(require('body-parser').json())
-
-const Menu = require('./db/Menu.js');
-// const Chirp = require('../db/Chirp.js');
-const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+//shameless season 2 
+app.use(bp.json())
+app.use(bp.urlencoded({extended: false}))
+app.use(cookieparser())
+app.use(cors())
+app.use(bearerToken())
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
 
-//Static file declaration
-app.use(express.static(path.join(__dirname, 'client/build')));
+//shameless
+const files = fs.readdirSync(path.join(__dirname, 'routes'));
+files.forEach(file => {
+  const router = require(path.join(__dirname, './routes', file));
 
+  if (!router.router) {
+    console.log(`'${file}' did not export a 'router'. Skipped`);
+    return;
+  }
+  if (!router.prefix) {
+    console.log(`'${file}' did not export a 'prefix' path. Defaulting to '/'`)
+  }
 
-app.post('/api/menu/upload',  (req, res) => {
-    console.log(req.body);
+  app.use(router.prefix || '/', router.router);
+  console.log(`registered '${file}' to route '${router.prefix || '/'}'`);
+});
 
-    (new Menu({
-        date: Date.now(),
-        food: req.body.food
-    })).save().then( (result) => {
-        console.log(result)
-        res.send(result)
-    }).catch( (err) => {
-        console.log(err)
-        res.send(err)
-    })
-       
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
 })
-
-app.get('/api/menu/get', (req, res) => {
-    Menu.findOne({}, {}, { sort: { 'date' : -1 } }, (err, doc) => {
-        if(err){
-            res.send({
-                success: false,
-                error: err
-            })
-        }        
-        res.send({
-            success: true,
-            data: doc
-        })
-    })
-})
-
-
 
 app.listen(port, () => {
     if (process.argv[2] === '--dev') {
