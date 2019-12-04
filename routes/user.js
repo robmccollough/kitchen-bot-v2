@@ -37,9 +37,7 @@ router.post("/", (req, res) => {
 
 					res.send({
 						success: true,
-						created_user: {
-							...result._doc
-						}
+						created_user: { ...result }._doc
 					});
 				});
 			});
@@ -60,17 +58,17 @@ router.post("/check", (req, res) => {
 //these routes require auth
 
 router.get("/", auth, (req, res) => {
-	User.findOne({ _id: req.locals.user_id }).then(result => {
+	User.findOne({ _id: req.user_id }).then(result => {
 		res.send(result);
 	});
 });
 
 router.post("/guild", authAdmin, (req, res) => {
-	if (!req.body.user_id) {
+	if (!req.user_id) {
 		return res.send({ err: "Expected user_id param" });
 	}
 
-	User.updateOne({ _id: req.body.user_id }, { role: "admin" })
+	User.updateOne({ _id: req.user_id }, { role: "admin" })
 		.then(result => {
 			res.send(result);
 		})
@@ -78,7 +76,7 @@ router.post("/guild", authAdmin, (req, res) => {
 });
 
 router.put("/", auth, (req, res) => {
-	User.updateOne({ _id: req.locals.user_id }, req.body.update)
+	User.updateOne({ _id: req.user_id }, req.body.update)
 		.then(result => {
 			res.send(result);
 		})
@@ -86,7 +84,7 @@ router.put("/", auth, (req, res) => {
 });
 
 router.delete("/", auth, (req, res) => {
-	User.deleteOne({ _id: req.locals.user_id }).then(result => {
+	User.deleteOne({ _id: req.user_id }).then(result => {
 		res.send(result);
 	});
 });
