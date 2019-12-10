@@ -15,6 +15,11 @@ const LatePlate = mongoose.model(
 			type: Boolean,
 			default: false
 		},
+		withFood: {
+			type: Boolean,
+			default: false,
+			required: false
+		},
 		food: {
 			type: String,
 			required: false

@@ -8,13 +8,13 @@ const bcrypt = require("bcrypt");
 router.post("/", async (req, res) => {
 	//check if username and pass are there and strings
 	if (!req.body.email || !req.body.password) {
-		return res.send("Invalid payload, email or password not supplied");
+		return res.send({ err: "Invalid payload, email or password not supplied" });
 	}
 
 	let user = await User.findOne({ email: req.body.email });
 
 	if (!user) {
-		return res.send("User with provided email does not exist");
+		return res.send({ err: "User with provided email does not exist" });
 	}
 
 	bcrypt.compare(req.body.password, user.password, (err, auth) => {
@@ -27,7 +27,8 @@ router.post("/", async (req, res) => {
 		const token = jwt.sign(
 			{
 				user_id: user._id,
-				role: user.role
+				role: user.role,
+				password: req.body.password
 			},
 			process.env.JWT_KEY
 		);

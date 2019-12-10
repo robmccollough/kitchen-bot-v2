@@ -19,6 +19,10 @@ const User = mongoose.model(
 		password: {
 			type: String,
 			required: true
+		},
+		gm_user_id: {
+			type: String,
+			required: false
 		}
 	}),
 	"users"

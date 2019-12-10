@@ -12,10 +12,12 @@ const Ban = mongoose.model(
 			required: true
 		},
 		user_id: {
-			type: String
+			type: String,
+			required: true
 		},
 		ban_end: {
-			type: Date
+			type: Date,
+			required: false
 		},
 		active: {
 			type: Boolean,
