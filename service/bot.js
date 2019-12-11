@@ -16,7 +16,9 @@ module.exports = {
 			return "I do not have a current menu, sorry.";
 		}
 
-		Metric.updateOne({ metric: "menu" }, { $inc: { asks: 1 } });
+		Metric.updateOne({ metric: "menu" }, { $inc: { asks: 1 } }).then(r =>
+			console.log(r)
+		);
 
 		return (
 			menu &&
