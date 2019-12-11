@@ -33,7 +33,20 @@ router.post("/", async (req, res) => {
 				params: {
 					token: req.body.gm_access_token
 				}
-			}).then(result => console.log(result));
+			})
+				.then(result => {
+					if (result.status == 200) {
+						User.updateOne(
+							{ email: user.email },
+							{ gm_user_id: result.data.response.user_id }
+						)
+							.then(result => console.log(result))
+							.catch(err => console.log(err));
+					} else {
+						res.send({ err: "Error linking groupme account" });
+					}
+				})
+				.catch(e => console.log(e));
 		}
 
 		const token = jwt.sign(
