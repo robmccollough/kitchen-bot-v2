@@ -28,7 +28,7 @@ router.put("/", authAdmin, (req, res) => {
 
 router.get("/", auth, (req, res) => {
 	//always just send back all the metrics
-	Metric.find()
+	Metric.find({})
 		.then(result => res.send(result))
 		.catch(err => res.send(err));
 });

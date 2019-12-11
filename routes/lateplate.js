@@ -18,13 +18,12 @@ router.get("/", auth, (req, res) => {
 });
 
 router.put("/", auth, (req, res) => {
-	LatePlate.findOne({ _id: req.lp_id })
-		.then(r =>
-			LatePlate.updateOne(
-				{ _id: req.lp_id },
-				{ complete: !r.complete }
-			).then(r => res.send(r))
-		)
+	LatePlate.updateOne({ _id: req.body.lp_id }, { complete: req.body.complete })
+		.then(r => {
+			if (r.nModified > 0) {
+				LatePlate.findOne({ _id: req.body.lp_id }).then(r => res.send(r));
+			}
+		})
 		.catch(e => res.send(e));
 });
 
