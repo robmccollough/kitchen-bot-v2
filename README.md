@@ -146,7 +146,7 @@ Currently the index endpoint does not offer functionality and will return a 404 
    - Response
     - Returns list of menus if successful
     
-###/metric
+#### /metric
 - *GET*
   - Returns counts of all tracked metrics
     - menu
@@ -164,7 +164,7 @@ Currently the index endpoint does not offer functionality and will return a 404 
     - Success / Failure
     
     
-###/request
+#### /request
 - *GET*
   - Returns requests
   - Parameters
@@ -177,7 +177,7 @@ Currently the index endpoint does not offer functionality and will return a 404 
     - body : String (**required**)
     
     
-###/lp
+#### /lp
 - *GET*
   - Returns lateplates from only the current day
   - Parameters
