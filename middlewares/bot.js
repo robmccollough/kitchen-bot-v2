@@ -4,6 +4,8 @@ const Ban = require("../db/Ban");
 const Service = require("../service/bot");
 
 async function parseBotRequest(req, res, next) {
+	//add check for some unqiue quality of ktichenbots message to provide authentication
+
 	if (req.body.sender_type == "bot") {
 		return res.send("Bot Msg");
 	}

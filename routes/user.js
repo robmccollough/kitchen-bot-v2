@@ -49,7 +49,7 @@ router.post("/check", (req, res) => {
 	User.findOne({ email: req.body.email })
 		.then(result => {
 			res.send({
-				in_use: result == null
+				in_use: result ? true : false
 			});
 		})
 		.catch(err => res.send(err));
