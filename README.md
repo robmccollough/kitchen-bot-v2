@@ -162,6 +162,8 @@ Currently the index endpoint does not offer functionality and will return a 404 
     - stat: String
   - Response 
     - Success / Failure
+    
+    
 ###/request
 - *GET*
   - Returns requests
@@ -173,6 +175,8 @@ Currently the index endpoint does not offer functionality and will return a 404 
   -Creates a request
   - Parameters
     - body : String (**required**)
+    
+    
 ###/lp
 - *GET*
   - Returns lateplates from only the current day
