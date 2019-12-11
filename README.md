@@ -159,6 +159,7 @@ Currently the index endpoint does not offer functionality and will return a 404 
   - Increments count of supplied metric by 1 
   - Parameters
     - metric : String (**required**)
+    - stat: String
   - Response 
     - Success / Failure
 ###/request
