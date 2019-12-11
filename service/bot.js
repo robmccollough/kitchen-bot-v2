@@ -17,7 +17,7 @@ module.exports = {
 		}
 
 		Metric.updateOne({ metric: "menu" }, { $inc: { asks: 1 } }).then(r =>
-			console.log(r)
+			console.log("Updated Menu Metrics")
 		);
 
 		return (
@@ -49,7 +49,9 @@ module.exports = {
 		}
 		let dinner = menu.food[weekdays[day - 1]];
 
-		Metric.updateOne({ metric: "dinner" }, { $inc: { asks: 1 } });
+		Metric.updateOne({ metric: "dinner" }, { $inc: { asks: 1 } }).then(() => {
+			console.log("Updated Dinner Asks");
+		});
 
 		return `Dinner tonight is:\n\t${dinner.main}|${dinner.side}`;
 	},
@@ -69,7 +71,11 @@ module.exports = {
 			}).save();
 		}
 
-		Metric.updateOne({ metric: "lateplate" }, { $inc: { asks: 1 } });
+		Metric.updateOne({ metric: "lateplate" }, { $inc: { asks: 1 } }).then(
+			() => {
+				console.log("Updated lateplate asks");
+			}
+		);
 
 		return `Saved LatePlate for ${recipient}${order ? " - " + order : ""}`;
 	},
@@ -106,7 +112,11 @@ module.exports = {
 			{ complete: true }
 		).then(r => r.nModified);
 
-		Metric.updateOne({ metric: "menu" }, { $inc: { total: updated } });
+		Metric.updateOne({ metric: "menu" }, { $inc: { total: updated } }).then(
+			r => {
+				console.log("Updated complete lateplates");
+			}
+		);
 
 		return updated > 0
 			? `Marked ${updated} lateplates from today as complete. Hopefully you actually wrote everyone down.`
