@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../db/User.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const axios = require("axios");
 
 //validates user, if user exists then return the _id of said user along with a jwt
 router.post("/", async (req, res) => {
@@ -17,13 +18,24 @@ router.post("/", async (req, res) => {
 		return res.send({ err: "User with provided email does not exist" });
 	}
 
-	bcrypt.compare(req.body.password, user.password, (err, auth) => {
+	bcrypt.compare(req.body.password, user.password, async (err, auth) => {
 		if (err) {
 			return res.send({ err: "Error in checking password", msg: err });
 		}
 		if (!auth) {
 			return res.send({ err: "Invalid username or password" });
 		}
+
+		if (req.body.gm_access_token) {
+			await axios({
+				method: "get",
+				url: process.env.GROUPME_USER_URL,
+				params: {
+					token: req.body.gm_access_token
+				}
+			}).then(result => console.log(result));
+		}
+
 		const token = jwt.sign(
 			{
 				user_id: user._id,

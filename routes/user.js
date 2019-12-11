@@ -76,6 +76,8 @@ router.post("/guild", authAdmin, (req, res) => {
 });
 
 router.put("/", auth, (req, res) => {
+	//make sure user updating is the one they one they want to update
+
 	User.updateOne({ _id: req.user_id }, req.body.update)
 		.then(result => {
 			res.send(result);

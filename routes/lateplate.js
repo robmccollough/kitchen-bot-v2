@@ -11,8 +11,8 @@ router.post("/", authAdmin, (req, res) => {
 });
 
 router.get("/", auth, (req, res) => {
-	let date = new Date().setDate(Date.now().getDate() - 1);
-	LatePlate.find({ date: { $gt: date } }).then(result => {
+	let date = new Date().setDate(new Date().getDate() - 1);
+	LatePlate.find({ created_at: { $gt: date } }).then(result => {
 		res.send(result);
 	});
 });

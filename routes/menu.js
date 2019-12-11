@@ -55,9 +55,11 @@ router.post("/", authAdmin, (req, res) => {
 });
 
 router.put("/", authAdmin, (req, res) => {
-	Menu.updateOne({ _id: req.body.menu_id }, req.body).then(result => {
-		res.send(result);
-	});
+	Menu.updateOne({ _id: req.body.menu_id }, req.body.update)
+		.then(result => {
+			res.send(result);
+		})
+		.catch(err => res.send(err));
 });
 
 module.exports = { router: router, prefix: "/menu" };
