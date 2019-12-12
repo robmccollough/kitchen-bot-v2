@@ -84,11 +84,13 @@ module.exports = {
 		//lateplates from that day
 
 		let plates = await LatePlate.find({
-			complete: false,
-			created_at: { $gt: new Date().setHours(0) }
-		}).catch(err => console.log(err));
-
-		console.log(plates);
+			complete: false
+		})
+			.then(r => {
+				console.log(r);
+				return r;
+			})
+			.catch(err => console.log(err));
 
 		if (!plates || plates.length < 1) {
 			return "There are currently no incomplete late plates.";
@@ -109,12 +111,13 @@ module.exports = {
 		`;
 	},
 	completeAllLatePlates: async () => {
-		let updated = await LatePlate.updateMany(
-			{ created_at: { $gt: new Date().setHours(0) } },
-			{ complete: true }
-		)
-			.then(r => r.nModified)
+		let updated = await LatePlate.updateMany({}, { complete: true })
+			.then(r => {
+				console.log(r);
+				return r.nModified;
+			})
 			.catch(err => console.log(err));
+
 		console.log(updated);
 
 		Metric.updateOne({ metric: "menu" }, { $inc: { total: updated } }).then(
