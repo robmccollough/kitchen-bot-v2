@@ -8,7 +8,7 @@ const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
 
 module.exports = {
 	getMenu: async () => {
-		let menu = await Menu.findOne({}, {}, { sort: { date: -1 } });
+		let menu = await Menu.findOne({}, {}, { $sort: { date: -1 } });
 		//if older than 5 days ignore
 		let fda = new Date(Date.now() - 432, 000, 000);
 
@@ -86,9 +86,7 @@ module.exports = {
 		let plates = await LatePlate.find({
 			complete: false,
 			created_at: { $gt: new Date().setHours(0) }
-		})
-			.sort({ created_at: -1 })
-			.then(r => r);
+		}).catch(err => console.log(err));
 
 		console.log(plates);
 
@@ -114,7 +112,10 @@ module.exports = {
 		let updated = await LatePlate.updateMany(
 			{ created_at: { $gt: new Date().setHours(0) } },
 			{ complete: true }
-		).then(r => r.nModified);
+		)
+			.then(r => r.nModified)
+			.catch(err => console.log(err));
+		console.log(updated);
 
 		Metric.updateOne({ metric: "menu" }, { $inc: { total: updated } }).then(
 			r => {
