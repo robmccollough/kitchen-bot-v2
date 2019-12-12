@@ -19,7 +19,11 @@ router.post(
 				bot_id: process.env.TEST_BOT_ID,
 				text: req.bot_response || "Hi There"
 			}
-		}).catch(err => console.log(err));
+		})
+			.then(() => {
+				res.send({ command: req.command, response: req.bot_response });
+			})
+			.catch(err => console.log(err));
 
 		//no response required
 	}

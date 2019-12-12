@@ -38,7 +38,7 @@ module.exports = {
 	},
 
 	getDinner: async () => {
-		let menu = await Menu.findOne({}, {}, { sort: { date: -1 } });
+		let menu = await Menu.findOne({}, {}, { $sort: { date: -1 } });
 		let fda = new Date(Date.now() - 432, 000, 000);
 		let day = new Date().getDay();
 		if (day == 0 || day == 6) {
@@ -86,7 +86,9 @@ module.exports = {
 		let plates = await LatePlate.find({
 			complete: false,
 			created_at: { $gt: new Date().setHours(0) }
-		}).sort({ created_at: -1 });
+		})
+			.sort({ created_at: -1 })
+			.then(r => r);
 
 		console.log(plates);
 
