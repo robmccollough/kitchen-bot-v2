@@ -88,7 +88,7 @@ module.exports = {
 		})
 			.then(r => {
 				console.log(r);
-				return r;
+				return r.filter(lp => lp.created_at > new Date().setHours(0));
 			})
 			.catch(err => console.log(err));
 
@@ -111,14 +111,13 @@ module.exports = {
 		`;
 	},
 	completeAllLatePlates: async () => {
+		//just update all of them every time
 		let updated = await LatePlate.updateMany({}, { complete: true })
 			.then(r => {
 				console.log(r);
 				return r.nModified;
 			})
 			.catch(err => console.log(err));
-
-		console.log(updated);
 
 		Metric.updateOne({ metric: "menu" }, { $inc: { total: updated } }).then(
 			r => {
