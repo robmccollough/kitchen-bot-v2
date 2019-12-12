@@ -43,7 +43,8 @@ router.delete("/", authAdmin, (req, res) => {
 
 router.post("/", authAdmin, (req, res) => {
 	new Menu({
-		food: req.body.food
+		food: req.body.food,
+		date: new Date()
 	})
 		.save()
 		.then(result => {

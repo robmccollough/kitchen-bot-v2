@@ -5,7 +5,7 @@ const Menu = mongoose.model(
 	new mongoose.Schema({
 		date: {
 			type: Date,
-			default: Date.now()
+			default: new Date()
 		},
 		food: {
 			monday: {
