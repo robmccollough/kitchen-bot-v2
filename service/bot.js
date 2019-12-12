@@ -10,7 +10,7 @@ module.exports = {
 	getMenu: async () => {
 		let menu = await Menu.findOne({}, {}, { $sort: { date: -1 } });
 		//if older than 5 days ignore
-		let fda = new Date(Date.now() - 432, 000, 000);
+		let fda = new Date(Date.now() - 432000000);
 
 		if (menu == null || menu.date > fda) {
 			return "I do not have a current menu, sorry.";
