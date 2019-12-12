@@ -8,7 +8,7 @@ const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
 
 module.exports = {
 	getMenu: async () => {
-		let menu = await Menu.findOne({}, {}, { $sort: { date: -1 } });
+		let menu = await Menu.findOne({}, {}, { $sort: { date: 1 } });
 		//if older than 5 days ignore
 		let fda = new Date(Date.now() - 432000000);
 
@@ -38,7 +38,7 @@ module.exports = {
 	},
 
 	getDinner: async () => {
-		let menu = await Menu.findOne({}, {}, { $sort: { date: -1 } });
+		let menu = await Menu.findOne({}, {}, { $sort: { date: 1 } });
 		let fda = new Date(Date.now() - 432000000);
 		let day = new Date().getDay();
 		if (day == 0 || day == 6) {
