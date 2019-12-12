@@ -119,11 +119,12 @@ module.exports = {
 			})
 			.catch(err => console.log(err));
 
-		Metric.updateOne({ metric: "menu" }, { $inc: { total: updated } }).then(
-			r => {
-				console.log("Updated complete lateplates");
-			}
-		);
+		Metric.updateOne(
+			{ metric: "lateplate" },
+			{ $inc: { total: updated } }
+		).then(r => {
+			console.log("Updated complete lateplates");
+		});
 
 		return updated > 0
 			? `Marked ${updated} lateplates from today as complete. Hopefully you actually wrote everyone down.`
