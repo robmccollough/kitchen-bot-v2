@@ -11,56 +11,58 @@ const Menu = mongoose.model(
 			monday: {
 				main: {
 					type: String,
-					required: false
+					required: true
 				},
 				side: {
 					type: String,
-					required: false
+					required: true
 				}
 			},
 			tuesday: {
 				main: {
 					type: String,
-					required: false
+					required: true
 				},
 				side: {
 					type: String,
-					required: false
+					required: true
 				}
 			},
 			wednesday: {
 				main: {
 					type: String,
-					required: false
+					required: true
 				},
 				side: {
 					type: String,
-					required: false
+					required: true
 				}
 			},
 			thursday: {
 				main: {
 					type: String,
-					required: false
+					required: true
 				},
 				side: {
 					type: String,
-					required: false
+					required: true
 				}
 			},
 			friday: {
 				main: {
 					type: String,
-					required: false
+					required: true
 				},
 				side: {
 					type: String,
-					required: false
+					required: true
 				}
-			}
+			},
+			type: Object,
+			required: true
 		}
 	}),
-	"test-menus"
+	"menus"
 );
 
 module.exports = Menu;
