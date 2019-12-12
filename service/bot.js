@@ -12,7 +12,7 @@ module.exports = {
 		//if older than 5 days ignore
 		let fda = new Date(Date.now() - 432000000);
 
-		if (menu == null || menu.date > fda) {
+		if (menu == null || menu.date < fda) {
 			return "I do not have a current menu, sorry.";
 		}
 
@@ -39,12 +39,12 @@ module.exports = {
 
 	getDinner: async () => {
 		let menu = await Menu.findOne({}, {}, { $sort: { date: -1 } });
-		let fda = new Date(Date.now() - 432, 000, 000);
+		let fda = new Date(Date.now() - 432000000);
 		let day = new Date().getDay();
 		if (day == 0 || day == 6) {
 			return "There is no dinner tonight.";
 		}
-		if (menu == null || menu.date > fda) {
+		if (menu == null || menu.date < fda) {
 			return "I do not have a current menu, sorry.";
 		}
 		let dinner = menu.food[weekdays[day - 1]];
