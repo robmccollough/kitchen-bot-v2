@@ -88,6 +88,8 @@ module.exports = {
 			created_at: { $gt: new Date().setHours(0) }
 		}).sort({ created_at: -1 });
 
+		console.log(plates);
+
 		if (!plates || plates.length < 1) {
 			return "There are currently no incomplete late plates.";
 		}
