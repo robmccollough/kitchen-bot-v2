@@ -9,7 +9,7 @@ async function parseBotRequest(req, res, next) {
 	if (req.body.sender_type == "bot") {
 		return res.send("Bot Msg");
 	}
-	const regex = /^\/menu\b|\/dinner\b|\/ban\b|\/lp\b|\/all-lp\b|\/complete-lp\b/;
+	const regex = /^\/menu\b|^\/dinner\b|^\/ban\b|^\/lp\b|^\/all-lp\b|^\/complete-lp\b|^\/promote\b/;
 	if (!regex.test(req.body.text)) {
 		return res.send("No Op");
 	}
@@ -57,6 +57,10 @@ async function fetchBotResponse(req, res, next) {
 
 		case "complete-lp":
 			req.bot_response = await Service.completeAllLatePlates();
+			break;
+		case "promote":
+			req.bot_response = await Service.promoteUser(req.body);
+			break;
 		default:
 	}
 	next();

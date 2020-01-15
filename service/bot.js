@@ -168,6 +168,41 @@ module.exports = {
 
 		return `User ${name_to_ban} is now banned.`;
 	},
+	promoteUser: async promote => {
+		let admin = await User.findOne({ gm_user_id: promote.sender_id }).then(
+			res => {
+				return res && res.role === "admin";
+			}
+		);
+
+		if (!admin) {
+			return `User ${promote.name} does not have permission to ban other users.`;
+		}
+
+		let name_to_promote = promote.text.replace("/promote ", "");
+
+		let user_id = await axios({
+			method: "GET",
+			url: process.env.GROUPME_GROUP_URL,
+			headers: {
+				"X-Access-Token": process.env.GROUPME_ACCESS_TOKEN
+			}
+		})
+			.then(res => {
+				return res.data.response.members.find(
+					member => member.nickname == name_to_promote
+				).user_id;
+			})
+			.catch(err => console.log(err));
+
+		if (!user_id) {
+			return "I don't recognize that user. Please try again";
+		}
+
+		User.updateOne({ gm_user_id: user_id }, { role: "admin" });
+
+		return `User ${name_to_promote} is now an admin.`;
+	},
 	sendBotMessage: text => {
 		axios({
 			method: "POST",
