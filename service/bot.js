@@ -208,7 +208,7 @@ module.exports = {
 			method: "POST",
 			url: process.env.BOT_POST_URL,
 			data: {
-				bot_id: process.env.TEST_BOT_ID,
+				bot_id: process.env.BOT_ID,
 				text: text
 			}
 		}).catch(err => console.log(err));
