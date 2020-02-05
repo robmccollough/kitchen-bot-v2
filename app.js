@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cron = require("node-cron");
 const path = require("path");
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
@@ -9,6 +10,11 @@ const cookieparser = require("cookie-parser");
 const cors = require("cors");
 const bearerToken = require("express-bearer-token");
 const bp = require("body-parser");
+const accountSid = process.env.TWILIO_SID;
+const authToken = process.env.TWILIO_TOKEN;
+const to = process.env.TWILIO_TO;
+const from = process.env.TWILIO_FROM;
+const client = require("twilio")(accountSid, authToken);
 
 //shameless season 2
 app.use(bp.json());
@@ -20,6 +26,24 @@ app.use(bearerToken());
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
+});
+
+//cronjobs
+cron.schedule("45 15 * * Monday,Tuesday,Wednesday,Thursday", () => {
+	//twilio time
+	client.messages
+		.create({
+			body:
+				"This is a test of the lateplate functionality for KitchenBot 2.0. Please ignore this message.",
+			to: to,
+			from: from
+		})
+		.then(msg => {
+			console.log(`Twilio Message Sent\n${msg}`);
+		})
+		.catch(e => {
+			console.log(`\nTwilio Errorr\n`);
+		});
 });
 
 //shameless

@@ -26,6 +26,8 @@
 		"jsonwebtoken": "^8.5.1",
 		"localtunnel": "^2.0.0",
 		"mongoose": "^5.7.5",
-		"nodemon": "^1.19.3"
+		"node-cron": "^2.0.3",
+		"nodemon": "^1.19.3",
+		"twilio": "^3.39.3"
 	}
 }
