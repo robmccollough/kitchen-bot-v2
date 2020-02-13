@@ -45,6 +45,10 @@ async function fetchBotResponse(req, res, next) {
 			req.bot_response = await Service.postBan(req.body);
 			break;
 
+		case "unban":
+			req.bot_response = await Service.unbanUser(req.body);
+			break;
+
 		case "lp":
 			req.bot_response = await Service.postLatePlate(
 				req.body.name,
