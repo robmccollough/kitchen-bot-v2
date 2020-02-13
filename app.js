@@ -15,6 +15,7 @@ const authToken = process.env.TWILIO_TOKEN;
 const to = process.env.TWILIO_TO;
 const from = process.env.TWILIO_FROM;
 const client = require("twilio")(accountSid, authToken);
+const Service = require("./service/bot");
 
 //shameless season 2
 app.use(bp.json());
@@ -29,12 +30,16 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 //cronjobs
-cron.schedule("45 15 * * Monday,Tuesday,Wednesday,Thursday", () => {
+cron.schedule("45 16 * * Monday,Tuesday,Wednesday,Thursday", async () => {
+	let lps = Service.getLatePlates(true)
+		.filter(p => !p.withFood)
+		.map(plate => `${plate.recipient}`)
+		.join("\n");
+
 	//twilio time
 	client.messages
 		.create({
-			body:
-				"This is a test of the lateplate functionality for KitchenBot 2.0. Please ignore this message.",
+			body: lps,
 			to: to,
 			from: from
 		})

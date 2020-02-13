@@ -80,7 +80,7 @@ module.exports = {
 		return `Saved LatePlate for ${recipient}${order ? " - " + order : ""}`;
 	},
 
-	getLatePlates: async () => {
+	getLatePlates: async (twilio = false) => {
 		//lateplates from that day
 
 		let plates = await LatePlate.find({
@@ -96,7 +96,9 @@ module.exports = {
 			return "There are currently no incomplete late plates.";
 		}
 
-		return `
+		return twilio
+			? plates
+			: `
 			Here are the incomplete late plates from today:
 			\nLunch:
 			\n${plates
