@@ -30,9 +30,9 @@ module.exports = {
 				menu.food.wednesday.main
 			} \n\t${menu.food.wednesday.side}\nThursday:\n\t${
 				menu.food.thursday.main
-			} \n\t${menu.food.thursday.side}Friday:\n\t${menu.food.friday.main} \n\t${
-				menu.food.friday.side
-			}
+			} \n\t${menu.food.thursday.side}\nFriday:\n\t${
+				menu.food.friday.main
+			} \n\t${menu.food.friday.side}
 		`
 		);
 	},
