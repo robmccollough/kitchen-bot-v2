@@ -29,8 +29,8 @@ mongoose.connect(process.env.MONGO_URI, {
 	useUnifiedTopology: true
 });
 
-//cronjobs
-cron.schedule("45 16 * * Monday,Tuesday,Wednesday,Thursday", async () => {
+cronjobs;
+cron.schedule("45 15 * * Monday,Tuesday,Wednesday,Thursday", async () => {
 	let lps = Service.getLatePlates(true)
 		.filter(p => !p.withFood)
 		.map(plate => `${plate.recipient}`)
